@@ -1,19 +1,35 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StatusBar, ScrollView } from "react-native";
-import { styles } from "./RegisterScreen.styles";
-import type { RegisterScreenProps } from "./RegisterScreen.types";
+import React, { useCallback, useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StatusBar,
+  ScrollView,
+} from 'react-native';
+import { styles } from './RegisterScreen.styles';
+import type { RegisterScreenProps } from './RegisterScreen.types';
 
 
 
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+
+  const togglePassword = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
+
+
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <StatusBar barStyle="light-content" backgroundColor="#0D1B2A" />
 
 
@@ -59,22 +75,22 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={() => setShowPassword(!showPassword)}
-          >
-            <Text style={styles.eyeIconText}>{showPassword ? "🙈" : "👁️"}</Text>
+          <TouchableOpacity style={styles.eyeIcon} onPress={togglePassword}>
+            <Text style={styles.eyeIconText}>{showPassword ? '🙈' : '👁️'}</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <TouchableOpacity style={[styles.primaryButton, styles.primaryButtonWithMargin]}>
+    <TouchableOpacity
+        style={[styles.primaryButton, styles.primaryButtonWithMargin]}
+        onPress={() => navigation.navigate('Login')}
+      >
         <Text style={styles.primaryButtonText}>Create Account</Text>
       </TouchableOpacity>
 
       <View style={styles.footerRow}>
         <Text style={styles.footerText}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.footerLink}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -82,4 +98,4 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
   );
 };
 
-export default RegisterScreen;
+export default React.memo(RegisterScreen);

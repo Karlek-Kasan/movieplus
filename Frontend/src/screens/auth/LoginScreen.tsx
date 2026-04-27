@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,19 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
-} from "react-native";
-import { styles } from "./LoginScreen.styles";
-import type { LoginScreenProps } from "./LoginScreen.types";
+} from 'react-native';
+import { styles } from './LoginScreen.styles';
+import type { LoginScreenProps } from './LoginScreen.types';
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
+
 
   return (
     <ScrollView
@@ -51,23 +56,22 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={() => setShowPassword(!showPassword)}
-          >
-            <Text style={styles.eyeIconText}>{showPassword ? "🙈" : "👁️"}</Text>
+          <TouchableOpacity style={styles.eyeIcon} onPress={togglePassword}>
+            <Text style={styles.eyeIconText}>{showPassword ? '🙈' : '👁️'}</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <TouchableOpacity
         style={styles.forgotPassword}
-        onPress={() => navigation.navigate("ResetPassword")}
+        onPress={() => navigation.navigate('ResetPassword')}
       >
         <Text style={styles.forgotPasswordText}>Forgot password?</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.primaryButton}>
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={() => navigation.getParent()?.navigate('App')}
+      >
         <Text style={styles.primaryButtonText}>Login</Text>
       </TouchableOpacity>
 
@@ -78,8 +82,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       </View>
 
       <View style={styles.footerRow}>
-        <Text style={styles.footerText}>Don't have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+       <Text style={styles.footerText}>Don&apos;t have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.footerLink}>Sign up</Text>
         </TouchableOpacity>
       </View>
@@ -87,4 +91,4 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default React.memo(LoginScreen);
