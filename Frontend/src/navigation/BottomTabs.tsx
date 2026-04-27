@@ -1,11 +1,12 @@
-// src/navigation/BottomTabs.tsx
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import HomeScreen from '../screens/home/HomeScreen';
 import SearchScreen from '../screens/search/SearchScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
+import type { AppTabParamList } from '../types/navigation.types';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<AppTabParamList>();
 
 const BottomTabs = () => {
   return (
@@ -17,4 +18,4 @@ const BottomTabs = () => {
   );
 };
 
-export default BottomTabs;
+export default React.memo(BottomTabs);

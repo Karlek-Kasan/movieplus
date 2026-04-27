@@ -1,13 +1,10 @@
 // src/screens/profile/ProfileScreen.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
+import Screen from '../../components/common/Screen';
 
 const ProfileScreen = () => {
-  return (
-    <View>
-      <Text>Profile Screen</Text>
-    </View>
-  );
+  return <Screen title="Profile Screen" />;
 };
 
-export default ProfileScreen; // ✅ Must export default
+
+export default React.memo(ProfileScreen);

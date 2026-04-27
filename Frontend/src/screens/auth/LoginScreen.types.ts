@@ -1,5 +1,3 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { AuthScreenProps } from '../../types/navigation.types';    
 
-export type LoginScreenProps = {
-  navigation: NativeStackNavigationProp<any>;
-};
+export type LoginScreenProps = AuthScreenProps<'Login'>;

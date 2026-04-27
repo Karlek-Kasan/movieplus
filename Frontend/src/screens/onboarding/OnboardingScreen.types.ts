@@ -1,6 +1,5 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ImageSourcePropType } from "react-native";
-
+import type { ImageSourcePropType } from 'react-native';
+import type { RootScreenProps } from '../../types/navigation.types';
 export type OnboardingSlide = {
   id: string;
   image: ImageSourcePropType;
@@ -8,6 +7,4 @@ export type OnboardingSlide = {
   description: string;
 };
 
-export type OnboardingScreenProps = {
-  navigation: NativeStackNavigationProp<any>;
-};
+export type OnboardingScreenProps = RootScreenProps<'Onboarding'>;

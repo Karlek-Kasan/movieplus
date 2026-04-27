@@ -1,13 +1,9 @@
 // src/screens/search/SearchScreen.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
+import Screen from '../../components/common/Screen';
 
 const SearchScreen = () => {
-  return (
-    <View>
-      <Text>Search Screen</Text>
-    </View>
-  );
+ return <Screen title="Search Screen" />;
 };
 
-export default SearchScreen; // ✅ Must export default
+export default React.memo(SearchScreen);

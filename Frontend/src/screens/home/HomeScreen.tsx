@@ -1,13 +1,8 @@
-// src/screens/home/HomeScreen.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
+import Screen from '../../components/common/Screen';
 
 const HomeScreen = () => {
-  return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
-  );
+    return <Screen title="Home Screen" />;
 };
 
-export default HomeScreen; // ✅ Must export default
+export default React.memo(HomeScreen);

@@ -1,5 +1,3 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { RootScreenProps } from '../../types/navigation.types';  
 
-export type SplashScreenProps = {
-  navigation: NativeStackNavigationProp<any>;
-};
+export type SplashScreenProps = RootScreenProps<'Splash'>;

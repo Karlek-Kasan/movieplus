@@ -54,7 +54,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
     if (activeIndex < slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: activeIndex + 1 });
     } else {
-      navigation.replace("LoginScreen"); 
+       navigation.replace("Auth", { screen: "Login" });
     }
   };
 
@@ -141,4 +141,4 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   );
 };
 
-export default OnboardingScreen;
+export default React.memo(OnboardingScreen);

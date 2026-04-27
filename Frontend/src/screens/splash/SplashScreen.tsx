@@ -19,4 +19,4 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
   );
 };
 
-export default SplashScreen;
+export default React.memo(SplashScreen);
