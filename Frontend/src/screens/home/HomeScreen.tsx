@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -6,16 +6,19 @@ import {
   NativeSyntheticEvent,
   Pressable,
   Text,
-  TextInput,
+  SafeAreaView,
   View,
 } from 'react-native';
 
-import { styles } from './style';
-import type { Category, Movie } from './types';
 
-const featuredMovies: Movie[] = [
+import { carouselWidth, styles } from '../home/Home.styles';
+import type { Category, Movie } from '../home/Home.types';
+
+type FeaturedMovie = Movie & { releaseDate: string };
+
+const featuredMovies: FeaturedMovie[] = [
   {
-    id: 'f1',
+    id: 'featured-1',
     title: 'Black Panther: Wakanda Forever',
     image: 'https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=1200&auto=format&fit=crop',
     rating: 4.8,
@@ -23,7 +26,7 @@ const featuredMovies: Movie[] = [
     releaseDate: 'On March 2, 2022',
   },
   {
-    id: 'f2',
+    id: 'featured-2',
     title: 'The Way of Water',
     image: 'https://images.unsplash.com/photo-1518674660708-0e2c0473e68e?q=80&w=1200&auto=format&fit=crop',
     rating: 4.6,
@@ -31,7 +34,7 @@ const featuredMovies: Movie[] = [
     releaseDate: 'On December 16, 2022',
   },
   {
-    id: 'f3',
+    id: 'featured-3',
     title: 'Dune: Part One',
     image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1200&auto=format&fit=crop',
     rating: 4.7,
@@ -41,29 +44,29 @@ const featuredMovies: Movie[] = [
 ];
 
 const categories: Category[] = [
-  { id: 'c1', name: 'All' },
-  { id: 'c2', name: 'Comedy' },
-  { id: 'c3', name: 'Animation' },
-  { id: 'c4', name: 'Dokumenter' },
+  { id: 'all', name: 'All' },
+  { id: 'comedy', name: 'Comedy' },
+  { id: 'animation', name: 'Animation' },
+  { id: 'documentary', name: 'Documentary' },
 ];
 
 const popularMovies: Movie[] = [
   {
-    id: 'p1',
-    title: 'Spider-Man No..',
+     id: 'popular-1',
+    title: 'Spider-Man No Way Home',
     image: 'https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=900&auto=format&fit=crop',
     rating: 4.5,
     genre: 'Action',
   },
   {
-    id: 'p2',
-    title: 'Life of PI',
+    id: 'popular-2',
+    title: 'The Jungle Waiting',
     image: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?q=80&w=900&auto=format&fit=crop',
     rating: 4.5,
     genre: 'Action',
   },
   {
-    id: 'p3',
+      id: 'popular-3',
     title: 'Riverdale',
     image: 'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=900&auto=format&fit=crop',
     rating: 4.5,
@@ -72,45 +75,43 @@ const popularMovies: Movie[] = [
 ];
 
 const HomeScreen = () => {
-  const [activeCategoryId, setActiveCategoryId] = useState('c1');
-  const [activeBannerIndex, setActiveBannerIndex] = useState(0);
-  const bannerWidthRef = useRef(1);
+   const [activeCategory, setActiveCategory] = useState('all');
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const onBannerScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { contentOffset, layoutMeasurement } = event.nativeEvent;
-    const cardWidth = layoutMeasurement.width;
-    bannerWidthRef.current = cardWidth;
-    const index = Math.round(contentOffset.x / cardWidth);
-
-    if (index !== activeBannerIndex) {
-      setActiveBannerIndex(index);
+     const onCarouselScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const nextIndex = Math.round(offsetX / carouselWidth);
+    if (nextIndex !== activeIndex) {
+      setActiveIndex(nextIndex);
     }
-  }, [activeBannerIndex]);
+  };
 
-  const dots = useMemo(
+   const paginationDots = useMemo(
     () =>
       featuredMovies.map((movie, index) => (
-        <View key={movie.id} style={[styles.dot, index === activeBannerIndex && styles.dotActive]} />
+       <View key={movie.id} style={[styles.dot, index === activeIndex && styles.dotActive]} />
       )),
-    [activeBannerIndex],
+     [activeIndex],
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.screen}>
       <FlatList
         data={popularMovies}
         keyExtractor={(item) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.contentContainer}
         ListHeaderComponent={
           <>
             <View style={styles.header}>
-              <View style={styles.profileWrap}>
+               <View style={styles.profileBlock}>
                 <Image
                   source={{ uri: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop' }}
                   style={styles.profileImage}
                 />
                 <View>
-                  <Text style={styles.greeting}>Hello, Smith</Text>
+                    <Text style={styles.helloText}>Hello, Kasim</Text>
                   <Text style={styles.subtitle}>Let’s stream your favorite movie</Text>
                 </View>
               </View>
@@ -120,50 +121,51 @@ const HomeScreen = () => {
             </View>
 
             <View style={styles.searchRow}>
-              <Text style={styles.searchIcon}>⌕</Text>
-              <TextInput placeholder="Search a title..." placeholderTextColor="#84889B" style={styles.input} />
-              <View style={styles.filterDivider} />
+              <View style={styles.searchWrap}>
+              <Text style={styles.icon}>⌕</Text>
+              <Text style={styles.searchPlaceholder}>Search a title...</Text>
+              <View style={styles.searchDivider} />
               <Pressable style={styles.filterButton}>
-                <Text style={styles.filterIcon}>☷</Text>
+              <Text style={styles.icon}>☷</Text>
               </Pressable>
             </View>
 
             <FlatList
               data={featuredMovies}
-              keyExtractor={(item) => item.id}
               horizontal
-              showsHorizontalScrollIndicator={false}
-              snapToAlignment="start"
-              decelerationRate="fast"
               pagingEnabled
-              onMomentumScrollEnd={onBannerScroll}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item.id}
+              onMomentumScrollEnd={onCarouselScrollEnd}
               renderItem={({ item }) => (
                 <View style={styles.carouselItem}>
                   <Image source={{ uri: item.image }} style={styles.carouselImage} />
                   <View style={styles.carouselOverlay} />
                   <View style={styles.carouselTextWrap}>
-                    <Text style={styles.carouselTitle}>{item.title}</Text>
+                    <Text style={styles.carouselTitle} numberOfLines={2}>
+                      {item.title}
+                    </Text>
                     <Text style={styles.carouselSubtitle}>{item.releaseDate}</Text>
                   </View>
                 </View>
               )}
             />
 
-            <View style={styles.dotsRow}>{dots}</View>
+             <View style={styles.paginationRow}>{paginationDots}</View>
 
             <Text style={styles.sectionTitle}>Categories</Text>
             <FlatList
-              style={styles.categoriesList}
               data={categories}
-              keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.categoriesList}
+              keyExtractor={(item) => item.id}
               renderItem={({ item }) => {
-                const isActive = item.id === activeCategoryId;
+                const isActive = item.id === activeCategory;
                 return (
                   <Pressable
-                    style={[styles.categoryItem, isActive && styles.categoryItemActive]}
-                    onPress={() => setActiveCategoryId(item.id)}
+                    onPress={() => setActiveCategory(item.id)}
+                    style={[styles.categoryTab, isActive && styles.categoryTabActive]}
                   >
                     <Text
                       numberOfLines={1}
@@ -177,7 +179,7 @@ const HomeScreen = () => {
               }}
             />
 
-            <View style={styles.sectionHeader}>
+           <View style={styles.rowBetween}>
               <Text style={styles.sectionTitle}>Most popular</Text>
               <Pressable>
                 <Text style={styles.seeAll}>See All</Text>
@@ -185,25 +187,23 @@ const HomeScreen = () => {
             </View>
           </>
         }
-        horizontal
-        showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={styles.popularCard}>
             <Image source={{ uri: item.image }} style={styles.poster} />
             <View style={styles.ratingBadge}>
               <Text style={styles.star}>★</Text>
-              <Text style={styles.ratingText}>{item.rating}</Text>
+               <Text style={styles.rating}>{item.rating}</Text>
             </View>
-            <View style={styles.cardBody}>
-              <Text numberOfLines={1} style={styles.cardTitle}>
+            <View style={styles.popularMeta}>
+              <Text style={styles.popularTitle} numberOfLines={1}>
                 {item.title}
               </Text>
-              <Text style={styles.cardGenre}>{item.genre}</Text>
+              <Text style={styles.popularGenre}>{item.genre}</Text>
             </View>
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -4,7 +4,6 @@ export type Movie = {
   image: string;
   rating: number;
   genre: string;
-  releaseDate?: string;
 };
 
 export type Category = {
