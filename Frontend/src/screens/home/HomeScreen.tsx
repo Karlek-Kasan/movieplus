@@ -6,12 +6,19 @@ import {
   NativeSyntheticEvent,
   Pressable,
   Text,
+<<<<<<< Updated upstream
   TextInput,
   View,
 } from 'react-native';
 
 import { styles } from './style';
 import type { Category, Movie } from './types';
+=======
+  View,
+} from 'react-native';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
+>>>>>>> Stashed changes
 
 const featuredMovies: Movie[] = [
   {
@@ -120,13 +127,25 @@ const HomeScreen = () => {
             </View>
 
             <View style={styles.searchRow}>
+<<<<<<< Updated upstream
               <Text style={styles.searchIcon}>⌕</Text>
               <TextInput placeholder="Search a title..." placeholderTextColor="#84889B" style={styles.input} />
               <View style={styles.filterDivider} />
               <Pressable style={styles.filterButton}>
                 <Text style={styles.filterIcon}>☷</Text>
               </Pressable>
+=======
+              <View style={styles.searchWrap}>
+                   <Text style={styles.icon}>⌕</Text>
+                <Text style={styles.searchPlaceholder}>Search a title...</Text>
+                <View style={styles.searchDivider} />
+                <Pressable style={styles.filterButton}>
+                  <Text style={styles.icon}>☷</Text>
+                </Pressable>
+              </View>
+>>>>>>> Stashed changes
             </View>
+           
 
             <FlatList
               data={featuredMovies}
