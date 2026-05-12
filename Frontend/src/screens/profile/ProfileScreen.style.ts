@@ -1,0 +1,173 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#121221',
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 120,
+  },
+  screenTitle: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 18,
+  },
+  profileCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1C1C2E',
+    borderRadius: 18,
+    padding: 16,
+    marginBottom: 16,
+  },
+  avatar: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    marginRight: 14,
+  },
+  profileTextBlock: {
+    flex: 1,
+  },
+  profileName: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  profileEmail: {
+    color: '#A0A0B0',
+    fontSize: 13,
+    marginTop: 4,
+  },
+  editButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  editIcon: {
+    color: '#00F5FF',
+    fontSize: 20,
+  },
+  premiumOuter: {
+    borderRadius: 18,
+    overflow: 'hidden',
+    marginBottom: 22,
+    minHeight: 104,
+  },
+  premiumGradientTop: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '52%',
+    backgroundColor: '#FF9F06',
+  },
+  premiumGradientBottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: '48%',
+    backgroundColor: '#FFE161',
+  },
+  premiumInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+  },
+  premiumTextBlock: {
+    flex: 1,
+  },
+  premiumIconWrap: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+  premiumIcon: {
+    fontSize: 24,
+  },
+  premiumTitle: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  premiumSubtitle: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    marginTop: 6,
+    opacity: 0.95,
+    maxWidth: '88%',
+  },
+  sectionTitle: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
+    marginBottom: 10,
+    marginTop: 4,
+  },
+  sectionCard: {
+    backgroundColor: '#1C1C2E',
+    borderRadius: 16,
+    marginBottom: 18,
+    overflow: 'hidden',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+  },
+  rowDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#2A2A3D',
+    marginLeft: 58,
+  },
+  rowIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#2A2A3D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  rowIconText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+  rowLabel: {
+    flex: 1,
+    color: '#FFFFFF',
+    fontSize: 15,
+  },
+  rowChevron: {
+    color: '#00F5FF',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  logoutButton: {
+    borderWidth: 1.5,
+    borderColor: '#00F5FF',
+    borderRadius: 999,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  logoutText: {
+    color: '#00F5FF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
