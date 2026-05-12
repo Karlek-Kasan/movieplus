@@ -5,20 +5,16 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Pressable,
+  ScrollView,
   Text,
-<<<<<<< Updated upstream
   TextInput,
   View,
 } from 'react-native';
 
-import { styles } from './style';
-import type { Category, Movie } from './types';
-=======
-  View,
-} from 'react-native';
+import { styles } from './HomeScreen.style';
+import type { Category, Movie } from './HomeScreen.types';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
->>>>>>> Stashed changes
+
 
 const featuredMovies: Movie[] = [
   {
@@ -104,124 +100,106 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={popularMovies}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.contentContainer}
-        ListHeaderComponent={
-          <>
-            <View style={styles.header}>
-              <View style={styles.profileWrap}>
-                <Image
-                  source={{ uri: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop' }}
-                  style={styles.profileImage}
-                />
-                <View>
-                  <Text style={styles.greeting}>Hello, Smith</Text>
-                  <Text style={styles.subtitle}>Let’s stream your favorite movie</Text>
-                </View>
-              </View>
-              <Pressable style={styles.favoriteButton}>
-                <Text style={styles.favoriteIcon}>♥</Text>
-              </Pressable>
-            </View>
-
-            <View style={styles.searchRow}>
-<<<<<<< Updated upstream
-              <Text style={styles.searchIcon}>⌕</Text>
-              <TextInput placeholder="Search a title..." placeholderTextColor="#84889B" style={styles.input} />
-              <View style={styles.filterDivider} />
-              <Pressable style={styles.filterButton}>
-                <Text style={styles.filterIcon}>☷</Text>
-              </Pressable>
-=======
-              <View style={styles.searchWrap}>
-                   <Text style={styles.icon}>⌕</Text>
-                <Text style={styles.searchPlaceholder}>Search a title...</Text>
-                <View style={styles.searchDivider} />
-                <Pressable style={styles.filterButton}>
-                  <Text style={styles.icon}>☷</Text>
-                </Pressable>
-              </View>
->>>>>>> Stashed changes
-            </View>
-           
-
-            <FlatList
-              data={featuredMovies}
-              keyExtractor={(item) => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              snapToAlignment="start"
-              decelerationRate="fast"
-              pagingEnabled
-              onMomentumScrollEnd={onBannerScroll}
-              renderItem={({ item }) => (
-                <View style={styles.carouselItem}>
-                  <Image source={{ uri: item.image }} style={styles.carouselImage} />
-                  <View style={styles.carouselOverlay} />
-                  <View style={styles.carouselTextWrap}>
-                    <Text style={styles.carouselTitle}>{item.title}</Text>
-                    <Text style={styles.carouselSubtitle}>{item.releaseDate}</Text>
-                  </View>
-                </View>
-              )}
+      <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <View style={styles.profileWrap}>
+            <Image
+              source={{ uri: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop' }}
+              style={styles.profileImage}
             />
-
-            <View style={styles.dotsRow}>{dots}</View>
-
-            <Text style={styles.sectionTitle}>Categories</Text>
-            <FlatList
-              style={styles.categoriesList}
-              data={categories}
-              keyExtractor={(item) => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => {
-                const isActive = item.id === activeCategoryId;
-                return (
-                  <Pressable
-                    style={[styles.categoryItem, isActive && styles.categoryItemActive]}
-                    onPress={() => setActiveCategoryId(item.id)}
-                  >
-                    <Text
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                      style={[styles.categoryText, isActive && styles.categoryTextActive]}
-                    >
-                      {item.name}
-                    </Text>
-                  </Pressable>
-                );
-              }}
-            />
-
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Most popular</Text>
-              <Pressable>
-                <Text style={styles.seeAll}>See All</Text>
-              </Pressable>
-            </View>
-          </>
-        }
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <View style={styles.popularCard}>
-            <Image source={{ uri: item.image }} style={styles.poster} />
-            <View style={styles.ratingBadge}>
-              <Text style={styles.star}>★</Text>
-              <Text style={styles.ratingText}>{item.rating}</Text>
-            </View>
-            <View style={styles.cardBody}>
-              <Text numberOfLines={1} style={styles.cardTitle}>
-                {item.title}
-              </Text>
-              <Text style={styles.cardGenre}>{item.genre}</Text>
+            <View>
+              <Text style={styles.greeting}>Hello, Smith</Text>
+              <Text style={styles.subtitle}>Let’s stream your favorite movie</Text>
             </View>
           </View>
-        )}
-      />
+          <Pressable style={styles.favoriteButton}>
+            <Text style={styles.favoriteIcon}>♥</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.searchRow}>
+          <Text style={styles.searchIcon}>⌕</Text>
+          <TextInput placeholder="Search a title..." placeholderTextColor="#84889B" style={styles.input} />
+          <View style={styles.filterDivider} />
+          <Pressable style={styles.filterButton}>
+            <Text style={styles.filterIcon}>☷</Text>
+          </Pressable>
+        </View>
+
+        <FlatList
+          data={featuredMovies}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToAlignment="start"
+          decelerationRate="fast"
+          pagingEnabled
+          onMomentumScrollEnd={onBannerScroll}
+          renderItem={({ item }) => (
+            <View style={styles.carouselItem}>
+              <Image source={{ uri: item.image }} style={styles.carouselImage} />
+              <View style={styles.carouselOverlay} />
+              <View style={styles.carouselTextWrap}>
+                <Text style={styles.carouselTitle}>{item.title}</Text>
+                <Text style={styles.carouselSubtitle}>{item.releaseDate}</Text>
+              </View>
+            </View>
+          )}
+        />
+
+        <View style={styles.dotsRow}>{dots}</View>
+
+        <Text style={styles.sectionTitle}>Categories</Text>
+        <View style={styles.categoriesWrap}>
+          {categories.map((item) => {
+            const isActive = item.id === activeCategoryId;
+            return (
+              <Pressable
+                key={item.id}
+                style={[styles.categoryItem, styles.categoryItemWrapped, isActive && styles.categoryItemActive]}
+                onPress={() => setActiveCategoryId(item.id)}
+              >
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={[styles.categoryText, isActive && styles.categoryTextActive]}
+                >
+                  {item.name}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Most popular</Text>
+          <Pressable>
+            <Text style={styles.seeAll}>See All</Text>
+          </Pressable>
+        </View>
+
+        <FlatList
+          data={popularMovies}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <View style={styles.popularCard}>
+              <Image source={{ uri: item.image }} style={styles.poster} />
+              <View style={styles.ratingBadge}>
+                <Text style={styles.star}>★</Text>
+                <Text style={styles.ratingText}>{item.rating}</Text>
+              </View>
+              <View style={styles.cardBody}>
+                <Text numberOfLines={1} style={styles.cardTitle}>
+                  {item.title}
+                </Text>
+                <Text style={styles.cardGenre}>{item.genre}</Text>
+              </View>
+            </View>
+          )}
+        />
+      </ScrollView>
     </View>
   );
 };

@@ -155,6 +155,11 @@ export const styles = StyleSheet.create({
   categoriesList: {
     marginBottom: 22,
   },
+  categoriesWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 22,
+  },
   categoryItem: {
     minWidth: 92,
     height: 44,
@@ -163,6 +168,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
     marginRight: 12,
+  },
+  categoryItemWrapped: {
+    marginBottom: 12,
   },
   categoryItemActive: {
     backgroundColor: '#22263C',
