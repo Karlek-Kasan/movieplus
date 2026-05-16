@@ -10,6 +10,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './style';
 import type { Category, Movie } from './types';
@@ -79,9 +80,17 @@ const popularMovies: Movie[] = [
 ];
 
 const HomeScreen = () => {
+  const navigation = useNavigation<any>();
   const [activeCategoryId, setActiveCategoryId] = useState('c1');
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const bannerWidthRef = useRef(1);
+
+  const goToMovieDetails = useCallback(
+    (movie: Movie) => navigation.navigate('MovieDetails', { movie }),
+    [navigation],
+  );
+
+  const goToSearchByActor = useCallback(() => navigation.navigate('SearchByActor'), [navigation]);
 
   const onBannerScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset, layoutMeasurement } = event.nativeEvent;
@@ -220,8 +229,99 @@ const HomeScreen = () => {
               <Text style={styles.cardGenre}>{item.genre}</Text>
             </View>
           </View>
+<<<<<<< Updated upstream
         )}
       />
+=======
+          <Pressable style={styles.favoriteButton}>
+            <Text style={styles.favoriteIcon}>♥</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.searchRow}>
+          <Text style={styles.searchIcon}>⌕</Text>
+          <TextInput placeholder="Search a title..." placeholderTextColor="#84889B" style={styles.input} />
+          <View style={styles.filterDivider} />
+          <Pressable style={styles.filterButton} onPress={goToSearchByActor}>
+            <Text style={styles.filterIcon}>☷</Text>
+          </Pressable>
+        </View>
+
+        <FlatList
+          data={featuredMovies}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToAlignment="start"
+          decelerationRate="fast"
+          pagingEnabled
+          onMomentumScrollEnd={onBannerScroll}
+          renderItem={({ item }) => (
+            <Pressable style={styles.carouselItem} onPress={() => goToMovieDetails(item)}>
+              <Image source={{ uri: item.image }} style={styles.carouselImage} />
+              <View style={styles.carouselOverlay} />
+              <View style={styles.carouselTextWrap}>
+                <Text style={styles.carouselTitle}>{item.title}</Text>
+                <Text style={styles.carouselSubtitle}>{item.releaseDate}</Text>
+              </View>
+            </Pressable>
+          )}
+        />
+
+        <View style={styles.dotsRow}>{dots}</View>
+
+        <Text style={styles.sectionTitle}>Categories</Text>
+        <View style={styles.categoriesWrap}>
+          {categories.map((item) => {
+            const isActive = item.id === activeCategoryId;
+            return (
+              <Pressable
+                key={item.id}
+                style={[styles.categoryItem, styles.categoryItemWrapped, isActive && styles.categoryItemActive]}
+                onPress={() => setActiveCategoryId(item.id)}
+              >
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={[styles.categoryText, isActive && styles.categoryTextActive]}
+                >
+                  {item.name}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Most popular</Text>
+          <Pressable>
+            <Text style={styles.seeAll}>See All</Text>
+          </Pressable>
+        </View>
+
+        <FlatList
+          data={popularMovies}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <Pressable style={styles.popularCard} onPress={() => goToMovieDetails(item)}>
+              <Image source={{ uri: item.image }} style={styles.poster} />
+              <View style={styles.ratingBadge}>
+                <Text style={styles.star}>★</Text>
+                <Text style={styles.ratingText}>{item.rating}</Text>
+              </View>
+              <View style={styles.cardBody}>
+                <Text numberOfLines={1} style={styles.cardTitle}>
+                  {item.title}
+                </Text>
+                <Text style={styles.cardGenre}>{item.genre}</Text>
+              </View>
+            </Pressable>
+          )}
+        />
+      </ScrollView>
+>>>>>>> Stashed changes
     </View>
   );
 };
