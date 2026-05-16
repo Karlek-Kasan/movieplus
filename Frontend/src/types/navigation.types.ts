@@ -16,6 +16,23 @@ export type AppTabParamList = {
   Profile: undefined;
 };
 
+export type MovieDetailsMovie = {
+  id: string;
+  title: string;
+  image: string;
+  rating: number;
+  genre: string;
+  releaseDate?: string;
+};
+
+export type AppNavigatorParamList = {
+  Tabs: NavigatorScreenParams<AppTabParamList>;
+  MovieDetails: { movie: MovieDetailsMovie };
+  SearchResult: { query?: string };
+  SearchByActor: undefined;
+  SearchBlank: undefined;
+};
+
 export type RootStackParamList = {
   Splash: undefined;
   Onboarding: undefined;
@@ -31,3 +48,6 @@ export type AuthScreenProps<T extends keyof AuthStackParamList> =
 
 export type AppTabScreenProps<T extends keyof AppTabParamList> =
   BottomTabScreenProps<AppTabParamList, T>;
+
+export type AppNavigatorScreenProps<T extends keyof AppNavigatorParamList> =
+  NativeStackScreenProps<AppNavigatorParamList, T>;

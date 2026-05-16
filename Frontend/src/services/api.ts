@@ -25,10 +25,19 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      const errorBody = (await response.json().catch(() => null)) as
+        | { message?: string }
+        | null;
+      throw new Error(errorBody?.message ?? `Request failed with status ${response.status}`);
     }
 
-    return (await response.json()) as T;
+    const json = (await response.json()) as T | { success: true; data: T };
+
+    if (json && typeof json === 'object' && 'success' in json && json.success && 'data' in json) {
+      return json.data;
+    }
+
+    return json as T;
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown network error';
     throw new Error(`API request error: ${message}`);
